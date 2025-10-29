@@ -30,4 +30,8 @@ variable "internet_gateway_suffix" {
 variable "routing_table_suffix" {
   description = "The suffix for the Routing Table name"
   type        = string
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> f459b53 (push)

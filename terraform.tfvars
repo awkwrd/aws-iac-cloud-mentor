@@ -23,4 +23,8 @@ subnets = [
 ]
 
 internet_gateway_suffix = "igw"
+<<<<<<< HEAD
 routing_table_suffix    = "rt"
+=======
+routing_table_suffix    = "rt"
+>>>>>>> f459b53 (push)
