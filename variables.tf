@@ -1,14 +1,11 @@
-variable "bucket_name" {
-  description = "The name of the S3 bucket to be created."
+variable "project" {
+  description = "Project name for tagging resources"
   type        = string
+  default     = "cmtr-fvj3554p"
 }
 
-variable "region" {
-  description = "The AWS region where the S3 bucket will be created."
+variable "s3_bucket_name" {
+  description = "Name of the S3 bucket to configure access for"
   type        = string
-}
-
-variable "tags" {
-  description = "Tags to apply to the S3 bucket."
-  type        = map(string)
+  default     = "cmtr-fvj3554p-bucket-1761821479"
 }
