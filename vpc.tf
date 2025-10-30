@@ -14,7 +14,7 @@ resource "aws_subnet" "public" {
   availability_zone       = var.availability_zones[count.index]
   map_public_ip_on_launch = true
   tags = {
-    Name = "cmtr-fvj3554p-01-subnet-public-${element(var.availability_zones, count.index)}"
+    Name = "cmtr-fvj3554p-01-subnet-public-${element(["a", "b", "c"], count.index)}"
   }
 }
 
