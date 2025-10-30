@@ -7,8 +7,4 @@ terraform {
       version = "~> 4.0"
     }
   }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> f459b53 (push)

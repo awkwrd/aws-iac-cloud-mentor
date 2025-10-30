@@ -50,8 +50,4 @@ resource "aws_route_table_association" "public_subnets" {
 
   subnet_id      = each.value.id
   route_table_id = aws_route_table.public.id
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> f459b53 (push)

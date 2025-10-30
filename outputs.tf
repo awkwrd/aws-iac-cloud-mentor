@@ -16,8 +16,4 @@ output "internet_gateway_id" {
 output "route_table_id" {
   description = "The ID of the created route table"
   value       = aws_route_table.public.id
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> f459b53 (push)
