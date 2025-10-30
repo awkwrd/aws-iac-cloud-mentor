@@ -2,7 +2,6 @@ resource "aws_launch_template" "cmtr_fvj3554p_template" {
   name          = local.launch_template_name
   image_id      = var.ami_id
   instance_type = var.instance_type
-  key_name      = var.ssh_key_name
 
   iam_instance_profile {
     name = "cmtr-fvj3554p-instance_profile"
@@ -11,7 +10,7 @@ resource "aws_launch_template" "cmtr_fvj3554p_template" {
   network_interfaces {
     associate_public_ip_address = true
     delete_on_termination       = true
-    security_groups             = ["cmtr-fvj3554p-ec2_sg", "cmtr-fvj3554p-http_sg"]
+    security_groups             = [local.ec2_security_group_id, local.http_security_group_id]
   }
 
   metadata_options {

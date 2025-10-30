@@ -3,7 +3,6 @@ resource "aws_autoscaling_group" "cmtr_fvj3554p_asg" {
   max_size            = 2
   min_size            = 1
   desired_capacity    = 2
-  vpc_zone_identifier = var.private_subnets
   launch_template {
     id      = aws_launch_template.cmtr_fvj3554p_template.id
     version = "$Latest"

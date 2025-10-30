@@ -2,8 +2,8 @@ resource "aws_lb" "cmtr_fvj3554p_loadbalancer" {
   name               = local.alb_name
   internal           = false
   load_balancer_type = "application"
-  security_groups    = ["cmtr-fvj3554p-sglb"]
-  subnets            = var.public_subnets
+  security_groups    = [local.load_balancer_security_group_id]
+  subnets            = local.public_subnets
 
   enable_deletion_protection = false
 
@@ -25,7 +25,7 @@ resource "aws_lb_target_group" "cmtr_fvj3554p_target_group" {
   name     = "${local.alb_name}-tg"
   port     = 80
   protocol = "HTTP"
-  vpc_id   = var.vpc_id
+  vpc_id   = data.aws_vpc.cmtr_fvj3554p_vpc.id
 
   health_check {
     path                = "/"
