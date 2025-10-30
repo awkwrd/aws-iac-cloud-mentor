@@ -1,33 +1,42 @@
-variable "aws_region" {
-  description = "The AWS region to deploy resources in"
+# SSH Key variable
+variable "ssh_key" {
+  description = "Provides custom public SSH key."
   type        = string
 }
 
-variable "project_prefix" {
-  description = "The prefix for all resource names"
+# EC2 instance type
+variable "instance_type" {
+  description = "Instance type for the EC2 instance."
   type        = string
 }
 
-variable "vpc_cidr" {
-  description = "The CIDR block for the VPC"
+# Security group name
+variable "security_group_name" {
+  description = "Name of the security group to associate with the EC2 instance."
   type        = string
 }
 
-variable "subnets" {
-  description = "List of public subnets with their CIDR blocks and availability zones"
-  type = list(object({
-    name              = string
-    cidr_block        = string
-    availability_zone = string
-  }))
-}
-
-variable "internet_gateway_suffix" {
-  description = "The suffix for the Internet Gateway name"
+# Project tag
+variable "project_tag" {
+  description = "Project tag for resource tracking."
   type        = string
 }
 
-variable "routing_table_suffix" {
-  description = "The suffix for the Routing Table name"
+# ID tag
+variable "id_tag" {
+  description = "ID tag for resource tracking."
   type        = string
+}
+
+# AMI filters for dynamic lookup
+variable "ami_name_filter" {
+  description = "Filter for the AMI name to dynamically fetch the latest AMI ID."
+  type        = string
+  default     = "amzn2-ami-hvm-*-x86_64-gp2" # Default to Amazon Linux 2 AMI
+}
+
+variable "ami_owner" {
+  description = "Owner ID for the AMI to dynamically fetch the latest AMI ID."
+  type        = string
+  default     = "137112412989" # Default to Amazon's official owner ID
 }
