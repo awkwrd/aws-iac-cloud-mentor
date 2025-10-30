@@ -1,9 +1,9 @@
-output "ec2_public_ip" {
-  description = "The public IP address of the EC2 instance."
-  value       = aws_instance.ec2.public_ip
+output "bucket_name" {
+  description = "The name of the S3 bucket created."
+  value       = aws_s3_bucket.storage_bucket.bucket
 }
 
-output "ec2_instance_id" {
-  description = "The ID of the EC2 instance."
-  value       = aws_instance.ec2.id
+output "bucket_region" {
+  description = "The AWS region where the S3 bucket is created."
+  value       = var.region
 }

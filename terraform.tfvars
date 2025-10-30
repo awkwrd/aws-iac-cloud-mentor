@@ -1,4 +1,5 @@
-instance_type       = "t2.micro"
-security_group_name = "cmtr-fvj3554p-sg"
-project_tag         = "epam-tf-lab"
-id_tag              = "cmtr-fvj3554p"
+bucket_name = "cmtr-fvj3554p-bucket-1761820619"
+region      = "us-east-1"
+tags = {
+  Project = "cmtr-fvj3554p"
+}
