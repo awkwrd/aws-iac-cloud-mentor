@@ -2,9 +2,10 @@ resource "aws_launch_template" "cmtr_fvj3554p_template" {
   name          = local.launch_template_name
   image_id      = var.ami_id
   instance_type = var.instance_type
+  key_name      = var.ssh_key_name
 
   iam_instance_profile {
-    name = "cmtr-fvj3554p-instance_profile"
+    name = var.iam_instance_profile
   }
 
   network_interfaces {
@@ -18,7 +19,7 @@ resource "aws_launch_template" "cmtr_fvj3554p_template" {
     http_tokens   = "optional"
   }
 
-  user_data = <<-EOT
+  user_data = base64encode(<<-EOT
     #!/bin/bash
     yum update -y
     yum install -y aws-cli httpd jq
@@ -30,6 +31,7 @@ resource "aws_launch_template" "cmtr_fvj3554p_template" {
 
     echo "This message was generated on instance $INSTANCE_ID with the following IP: $PRIVATE_IP" > /var/www/html/index.html
   EOT
+  )
 
   tags = var.tags
 }

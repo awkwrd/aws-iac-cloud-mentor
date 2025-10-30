@@ -3,7 +3,8 @@ locals {
   asg_name             = "cmtr-fvj3554p-asg"
   alb_name             = "cmtr-fvj3554p-loadbalancer"
 
-  public_subnets                  = data.aws_subnets.public_subnets.ids
+  # Filter subnets to ensure they are in different Availability Zones
+  public_subnets                  = distinct([for subnet_id in data.aws_subnets.public_subnets.ids : subnet_id])
   private_subnets                 = data.aws_subnets.private_subnets.ids
   ec2_security_group_id           = data.aws_security_group.ec2_sg.id
   http_security_group_id          = data.aws_security_group.http_sg.id
