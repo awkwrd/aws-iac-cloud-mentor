@@ -3,9 +3,10 @@ locals {
   asg_name             = "cmtr-fvj3554p-asg"
   alb_name             = "cmtr-fvj3554p-loadbalancer"
 
-  # Filter subnets to ensure they are in different Availability Zones
-  public_subnets                  = distinct([for subnet_id in data.aws_subnets.public_subnets.ids : subnet_id])
-  private_subnets                 = data.aws_subnets.private_subnets.ids
+  # Ensure subnets are in different Availability Zones
+  public_subnets  = distinct([for subnet_id in data.aws_subnets.public_subnets.ids : subnet_id])
+  private_subnets = distinct([for subnet_id in data.aws_subnets.private_subnets.ids : subnet_id])
+
   ec2_security_group_id           = data.aws_security_group.ec2_sg.id
   http_security_group_id          = data.aws_security_group.http_sg.id
   load_balancer_security_group_id = data.aws_security_group.load_balancer_sg.id
