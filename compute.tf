@@ -1,5 +1,5 @@
 resource "aws_instance" "ec2_instance" {
-  ami           = "ami-0c55b159cbfafe1f0" # Replace with a valid AMI ID for your region
+  ami           = "ami-0601422bf6afa8ac3"
   instance_type = "t2.micro"
 
   subnet_id       = data.terraform_remote_state.base_infra.outputs.public_subnet_id
