@@ -1,34 +1,23 @@
-variable "allowed_ip_range" {
-  description = "List of IP address ranges for secure access."
+variable "aws_region" {
+  description = "The AWS region where resources will be created."
+  type        = string
+  default     = "us-east-1"
+}
+
+variable "vpc_cidr" {
+  description = "The CIDR block for the VPC."
+  type        = string
+  default     = "10.10.0.0/16"
+}
+
+variable "public_subnet_cidrs" {
+  description = "A list of CIDR blocks for the public subnets."
   type        = list(string)
+  default     = ["10.10.1.0/24", "10.10.3.0/24", "10.10.5.0/24"]
 }
 
-variable "vpc_id" {
-  description = "ID of the VPC."
-  type        = string
-}
-
-variable "public_instance_id" {
-  description = "ID of the public EC2 instance."
-  type        = string
-}
-
-variable "private_instance_id" {
-  description = "ID of the private EC2 instance."
-  type        = string
-}
-
-variable "public_subnet_id" {
-  description = "ID of the public subnet."
-  type        = string
-}
-
-variable "private_subnet_id" {
-  description = "ID of the private subnet."
-  type        = string
-}
-
-variable "project" {
-  description = "The project ID for tagging resources."
-  type        = string
+variable "availability_zones" {
+  description = "A list of availability zones for the public subnets."
+  type        = list(string)
+  default     = ["us-east-1a", "us-east-1b", "us-east-1c"]
 }
