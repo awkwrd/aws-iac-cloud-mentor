@@ -3,7 +3,7 @@ resource "aws_lb" "cmtr_fvj3554p_loadbalancer" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = [local.load_balancer_security_group_id]
-  subnets            = local.public_subnets
+  subnets            = [local.public_subnets[0]] # Select the first subnet
 
   enable_deletion_protection = false
 
