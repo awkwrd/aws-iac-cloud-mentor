@@ -17,6 +17,8 @@ data "aws_security_group" "selected" {
     name   = "tag:Name"
     values = [var.security_group_name]
   }
+
+  vpc_id = data.aws_vpc.selected.id
 }
 
 data "aws_ami" "amazon_linux" {
