@@ -1,51 +1,31 @@
-data "aws_vpc" "cmtr_fvj3554p_vpc" {
+data "aws_vpc" "selected" {
   filter {
     name   = "tag:Name"
-    values = [var.vpc_name_tag]
+    values = [var.vpc_name]
   }
 }
 
-data "aws_subnets" "public_subnets" {
-  filter {
-    name   = "tag:aws:cloudformation:stack-name"
-    values = ["cmtr-fvj3554p-stack"]
-  }
-
-  filter {
-    name   = "vpc-id"
-    values = [data.aws_vpc.cmtr_fvj3554p_vpc.id]
-  }
-}
-
-data "aws_subnets" "private_subnets" {
-  filter {
-    name   = "tag:aws:cloudformation:stack-name"
-    values = ["cmtr-fvj3554p-stack"]
-  }
-
-  filter {
-    name   = "vpc-id"
-    values = [data.aws_vpc.cmtr_fvj3554p_vpc.id]
-  }
-}
-
-data "aws_security_group" "ec2_sg" {
+data "aws_subnet" "public" {
   filter {
     name   = "tag:Name"
-    values = [var.ec2_security_group_name]
+    values = [var.public_subnet_name]
   }
 }
 
-data "aws_security_group" "http_sg" {
+data "aws_security_group" "selected" {
   filter {
     name   = "tag:Name"
-    values = [var.http_security_group_name]
+    values = [var.security_group_name]
   }
 }
 
-data "aws_security_group" "load_balancer_sg" {
+data "aws_ami" "amazon_linux" {
+  most_recent = true
+
   filter {
-    name   = "tag:Name"
-    values = [var.load_balancer_security_group_name]
+    name   = "name"
+    values = ["amzn2-ami-kernel-5.10-hvm-*-x86_64-gp2"]
   }
+
+  owners = ["amazon"]
 }

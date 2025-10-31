@@ -1,1 +1,5 @@
-aws_region = "us-east-1"
+aws_region          = "us-east-1"
+project_id          = "cmtr-fvj3554p"
+vpc_name            = "cmtr-fvj3554p-vpc"
+public_subnet_name  = "cmtr-fvj3554p-public-subnet-1"
+security_group_name = "cmtr-fvj3554p-sg"

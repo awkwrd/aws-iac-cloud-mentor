@@ -1,0 +1,13 @@
+resource "aws_instance" "cmtr_fvj3554p_instance" {
+  ami           = data.aws_ami.amazon_linux.id
+  instance_type = "t2.micro"
+  subnet_id     = data.aws_subnet.public.id
+  security_groups = [
+    data.aws_security_group.selected.name
+  ]
+
+  tags = {
+    Name       = "${var.project_id}-instance"
+    Project_ID = var.project_id
+  }
+}
