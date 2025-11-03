@@ -1,6 +1,23 @@
+terraform {
+  required_version = ">= 1.5.7"
+
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+    tls = {
+      source  = "hashicorp/tls"
+      version = "~> 4.0"
+    }
+  }
+}
+
 provider "aws" {
   region = var.region
 }
+
+provider "tls" {}
 
 # Fetch the latest Amazon Linux 2 AMI
 data "aws_ami" "amazon_linux" {
@@ -8,7 +25,7 @@ data "aws_ami" "amazon_linux" {
 
   filter {
     name   = "name"
-    values = ["amzn2-ami-hvm-*-x86_64-gp2"] # Amazon Linux 2 AMI pattern
+    values = ["amzn2-ami-hvm-*-x86_64-gp2"]
   }
 
   filter {
@@ -21,7 +38,7 @@ data "aws_ami" "amazon_linux" {
     values = ["hvm"]
   }
 
-  owners = ["137112412989"] # Amazon's official account ID for Amazon Linux AMIs
+  owners = ["137112412989"]
 }
 
 # Fetch public subnets dynamically based on tags or VPC ID
@@ -37,31 +54,28 @@ data "aws_subnets" "public" {
   }
 }
 
-# Use the IDs of the fetched subnets
 locals {
   public_subnet_ids = data.aws_subnets.public.ids
 }
 
-# Fetch the pre-provisioned security group for the load balancer
+# Fetch security groups dynamically
 data "aws_security_group" "lb" {
   filter {
-    name   = "tag:Name" # Filter by the "Name" tag
+    name   = "tag:Name"
     values = ["cmtr-fvj3554p-sg-lb"]
   }
 }
 
-# Fetch the pre-provisioned security group for HTTP access
 data "aws_security_group" "http" {
   filter {
-    name   = "tag:Name" # Filter by the "Name" tag
+    name   = "tag:Name"
     values = ["cmtr-fvj3554p-sg-http"]
   }
 }
 
-# Fetch the pre-provisioned security group for SSH access
 data "aws_security_group" "ssh" {
   filter {
-    name   = "tag:Name" # Filter by the "Name" tag
+    name   = "tag:Name"
     values = ["cmtr-fvj3554p-sg-ssh"]
   }
 }
@@ -117,13 +131,13 @@ resource "aws_launch_template" "blue" {
   name          = "cmtr-fvj3554p-blue-template"
   instance_type = var.blue_instance_type
   image_id      = data.aws_ami.amazon_linux.id
-  key_name      = aws_key_pair.ssh_key.key_name
+  key_name      = var.ssh_key_name
 
   network_interfaces {
     associate_public_ip_address = true
     security_groups = [
-      data.aws_security_group.http.id, # HTTP security group
-      data.aws_security_group.ssh.id   # SSH security group
+      data.aws_security_group.http.id,
+      data.aws_security_group.ssh.id
     ]
   }
 
@@ -143,13 +157,13 @@ resource "aws_launch_template" "green" {
   name          = "cmtr-fvj3554p-green-template"
   instance_type = var.green_instance_type
   image_id      = data.aws_ami.amazon_linux.id
-  key_name      = aws_key_pair.ssh_key.key_name
+  key_name      = var.ssh_key_name
 
   network_interfaces {
     associate_public_ip_address = true
     security_groups = [
-      data.aws_security_group.http.id, # HTTP security group
-      data.aws_security_group.ssh.id   # SSH security group
+      data.aws_security_group.http.id,
+      data.aws_security_group.ssh.id
     ]
   }
 
@@ -190,4 +204,14 @@ resource "aws_autoscaling_group" "green" {
   desired_capacity    = 1
   vpc_zone_identifier = local.public_subnet_ids
   target_group_arns   = [aws_lb_target_group.green.arn]
+}
+
+resource "tls_private_key" "ssh_key" {
+  algorithm = "RSA"
+  rsa_bits  = 2048
+}
+
+resource "aws_key_pair" "ssh_key" {
+  key_name   = var.ssh_key_name
+  public_key = var.ssh_public_key
 }
