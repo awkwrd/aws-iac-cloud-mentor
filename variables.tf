@@ -28,12 +28,7 @@ variable "green_instance_type" {
   type        = string
 }
 
-variable "ssh_key_name" {
-  description = "The name of the SSH key pair to create."
-  type        = string
-}
-
-variable "ssh_public_key" {
-  description = "The public key to use for the SSH key pair."
+variable "project_name" {
+  description = "The name of the project used for tagging and naming resources."
   type        = string
 }
