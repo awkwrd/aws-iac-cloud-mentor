@@ -1,24 +1,10 @@
-terraform {
-  required_version = ">= 1.5.7"
-
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 5.0"
-    }
-    tls = {
-      source  = "hashicorp/tls"
-      version = "~> 4.0"
-    }
+# Fetch the VPC dynamically based on tags or default VPC
+data "aws_vpc" "selected" {
+  filter {
+    name   = "tag:Name"
+    values = ["cmtr-fvj3554p-vpc"]
   }
 }
-
-provider "aws" {
-  region = var.region
-}
-
-provider "tls" {}
-
 # Fetch the latest Amazon Linux 2 AMI
 data "aws_ami" "amazon_linux" {
   most_recent = true
