@@ -11,10 +11,6 @@
 # Ignore crash logs
 crash.log
 
-# Ignore override files (local customizations)
-*.tfvars
-*.tfvars.json
-
 # Ignore sensitive environment variable files
 .env
 
