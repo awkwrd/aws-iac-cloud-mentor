@@ -33,9 +33,14 @@ resource "aws_launch_template" "main" {
 
   user_data = base64encode(<<-EOF
               #!/bin/bash
+              yum install -y httpd
+              sleep 20
+              mkdir -p /var/www/html
               COMPUTE_MACHINE_UUID=$(cat /sys/devices/virtual/dmi/id/product_uuid | tr '[:upper:]' '[:lower:]')
               COMPUTE_INSTANCE_ID=$(curl -s http://169.254.169.254/latest/meta-data/instance-id)
               echo "<html><body><h1>This message was generated on instance $${COMPUTE_INSTANCE_ID} with the following UUID $${COMPUTE_MACHINE_UUID}</h1></body></html>" > /var/www/html/index.html
+              systemctl start httpd
+              systemctl enable httpd
               EOF
   )
 }
