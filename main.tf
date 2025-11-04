@@ -29,7 +29,7 @@ module "application" {
   min_size           = var.min_size
   max_size           = var.max_size
   name_prefix        = var.name_prefix
-  vpc_id             = module.network.vpc_id # Pass the VPC ID here
+  vpc_id             = module.network.vpc_id                              # Pass the VPC ID here
   instance_profile   = aws_iam_instance_profile.ssm_instance_profile.name # Pass the instance profile
 
 }
