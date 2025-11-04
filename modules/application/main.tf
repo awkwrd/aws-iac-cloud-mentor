@@ -31,18 +31,29 @@ resource "aws_launch_template" "main" {
     security_groups             = var.security_group_ids
   }
 
-  user_data = base64encode(<<-EOF
+user_data = base64encode(<<-EOF
               #!/bin/bash
+              set -e  # Exit immediately if a command exits with a non-zero status
+
+              # Update the system and install Apache
+              yum update -y
               yum install -y httpd
-              sleep 20
+
+              # Create the /var/www/html directory
               mkdir -p /var/www/html
+
+              # Generate instance-specific information
               COMPUTE_MACHINE_UUID=$(cat /sys/devices/virtual/dmi/id/product_uuid | tr '[:upper:]' '[:lower:]')
               COMPUTE_INSTANCE_ID=$(curl -s http://169.254.169.254/latest/meta-data/instance-id)
+
+              # Create a simple HTML page
               echo "<html><body><h1>This message was generated on instance $${COMPUTE_INSTANCE_ID} with the following UUID $${COMPUTE_MACHINE_UUID}</h1></body></html>" > /var/www/html/index.html
+
+              # Start and enable the Apache web server
               systemctl start httpd
               systemctl enable httpd
               EOF
-  )
+)
 }
 
 resource "aws_autoscaling_group" "main" {
