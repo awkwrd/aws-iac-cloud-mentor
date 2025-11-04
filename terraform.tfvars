@@ -1,7 +1,9 @@
-region              = "us-east-1"
-vpc_id              = "vpc-07dca5b53ee29ccbf"
-project_name        = "cmtr-fvj3554p"
-blue_weight         = 30
-green_weight        = 70
-blue_instance_type  = "t2.micro"
-green_instance_type = "t2.micro"
+region           = "us-east-1"
+vpc_cidr_block   = "10.10.0.0/16"
+public_subnets   = ["10.10.1.0/24", "10.10.3.0/24", "10.10.5.0/24"]
+allowed_ip_range = ["18.153.146.156/32", "194.156.103.66/32"]
+instance_type    = "t3.micro"
+desired_capacity = 2
+min_size         = 2
+max_size         = 2
+name_prefix      = "cmtr-fvj3554p"

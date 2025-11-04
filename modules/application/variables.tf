@@ -1,20 +1,10 @@
-variable "region" {
-  description = "AWS region to deploy resources"
-  type        = string
-}
-
-variable "vpc_cidr_block" {
-  description = "CIDR block for the VPC"
-  type        = string
-}
-
-variable "public_subnets" {
-  description = "List of public subnet CIDR blocks"
+variable "subnet_ids" {
+  description = "List of subnet IDs for the application"
   type        = list(string)
 }
 
-variable "allowed_ip_range" {
-  description = "List of allowed IP ranges for security groups"
+variable "security_group_ids" {
+  description = "List of security group IDs for the application"
   type        = list(string)
 }
 
@@ -40,5 +30,15 @@ variable "max_size" {
 
 variable "name_prefix" {
   description = "Prefix for resource names"
+  type        = string
+}
+
+variable "vpc_id" {
+  description = "The ID of the VPC"
+  type        = string
+}
+
+variable "public_http_sg_id" {
+  description = "The ID of the public HTTP security group"
   type        = string
 }
