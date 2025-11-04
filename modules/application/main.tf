@@ -35,7 +35,7 @@ resource "aws_launch_template" "main" {
     security_groups             = var.security_group_ids
   }
 
-user_data = base64encode(<<-EOF
+  user_data = base64encode(<<-EOF
               #!/bin/bash
               set -e  # Exit immediately if a command exits with a non-zero status
 
@@ -57,7 +57,7 @@ user_data = base64encode(<<-EOF
               systemctl start httpd
               systemctl enable httpd
               EOF
-)
+  )
 }
 
 resource "aws_autoscaling_group" "main" {
