@@ -1,4 +1,5 @@
 resource "aws_security_group" "ssh" {
+  name   = "${var.name_prefix}-ssh-sg" # Explicitly set the GroupName 
   vpc_id = var.vpc_id
 
   ingress {
@@ -14,6 +15,7 @@ resource "aws_security_group" "ssh" {
 }
 
 resource "aws_security_group" "public_http" {
+  name   = "${var.name_prefix}-public-http-sg" # Explicitly set the GroupName 
   vpc_id = var.vpc_id
 
   ingress {
@@ -43,6 +45,7 @@ resource "aws_security_group" "public_http" {
 }
 
 resource "aws_security_group" "private_http" {
+  name   = "${var.name_prefix}-private-http-sg" # Explicitly set the GroupName 
   vpc_id = var.vpc_id
 
   ingress {
