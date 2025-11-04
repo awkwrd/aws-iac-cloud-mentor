@@ -49,7 +49,21 @@ resource "aws_security_group" "private_http" {
     from_port       = 80
     to_port         = 80
     protocol        = "tcp"
-    security_groups = [aws_security_group.public_http.id]
+    security_groups = [aws_security_group.public_http.id] # Reference the public_http SG
+  }
+
+  egress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"] # Allow outbound HTTP traffic
+  }
+
+  egress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"] # Allow outbound HTTPS traffic
   }
 
   tags = {
