@@ -25,6 +25,10 @@ resource "aws_launch_template" "main" {
   instance_type = var.instance_type
   image_id      = data.aws_ami.amazon_linux.id
 
+  iam_instance_profile {
+    name = var.instance_profile
+  }
+
   network_interfaces {
     associate_public_ip_address = true
     delete_on_termination       = true

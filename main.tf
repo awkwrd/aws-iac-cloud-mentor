@@ -30,4 +30,6 @@ module "application" {
   name_prefix        = var.name_prefix
   vpc_id             = module.network.vpc_id # Pass the VPC ID here
   public_http_sg_id  = module.network_security.public_http_sg_id
+  instance_profile   = aws_iam_instance_profile.ssm_instance_profile.name # Pass the instance profile
+
 }

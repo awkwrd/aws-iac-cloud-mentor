@@ -42,3 +42,8 @@ variable "public_http_sg_id" {
   description = "The ID of the public HTTP security group"
   type        = string
 }
+
+variable "instance_profile" {
+  description = "The name of the IAM instance profile to attach to the EC2 instances"
+  type        = string
+}
